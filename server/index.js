@@ -2,19 +2,18 @@ import { SchemaRegistry } from "@ethereum-attestation-service/eas-sdk";
 import { ethers } from "ethers";
 import "dotenv/config";
 
-// Configuration constants
+
 const schemaRegistryContractAddress =
   "0x0a7E2Ff54e76B8E6659aedc9103FB21c038050D0"; 
 const schemaRegistry = new SchemaRegistry(schemaRegistryContractAddress);
 
 async function registerSchema() {
   try {
-    // Initialize provider and signer
+  
     const provider = new ethers.JsonRpcProvider(process.env.SEPOLIA_RPC_URL);
     const signer = new ethers.Wallet(process.env.WALLET_PRIVATE_KEY, provider);
     schemaRegistry.connect(signer);
-
-    // Initialize SchemaEncoder with the schema string
+    
     const schema =
       "string studentName, int256 age, string gender, string course, string registrationNumber, string issueDate string address";
     const revocable = true;
@@ -22,7 +21,6 @@ async function registerSchema() {
     const transaction = await schemaRegistry.register({
       schema,
       revocable,
-      // You could add a resolver field here for additional functionality
     });
 
     await transaction.wait();
