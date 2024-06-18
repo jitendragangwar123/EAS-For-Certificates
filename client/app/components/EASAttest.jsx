@@ -16,6 +16,7 @@ function EASAttest() {
   const submitAttestation = async () => {
     setSubmitUID("");
     const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send('eth_requestAccounts', []);
     const signer = provider.getSigner();
 
     const eas = new EAS(EASContractAddress);
