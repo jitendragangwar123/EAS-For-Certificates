@@ -1,10 +1,12 @@
 import Image from "next/image";
 import EASAttest from "./components/EASAttest";
+import Header from "./components/Header";
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center p-12">
-      <h2 className="flex items-center justify-center gap-2">
+    <main className="flex flex-col items-center p-18">
+      <Header/>
+      <h2 className="flex items-center justify-center gap-10 pt-10">
         <Image src="/header.png" height={180} width={180} alt="header" />
         <span className="mt-2 font-bold">Completion Attestation</span>
       </h2>
