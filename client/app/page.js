@@ -7,7 +7,6 @@ export default function Home() {
     <main className="flex flex-col items-center p-18">
       <Header/>
       <h2 className="flex items-center justify-center pt-20">
-        
         <span className="mt-2 text-4xl font-bold">Completion Attestation</span>
       </h2>
       <EASAttest />

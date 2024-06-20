@@ -3,8 +3,7 @@
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 import { ethers } from "ethers";
 import { useState } from "react";
-import { toast } from "react-hot-toast";
-
+import toast, { Toaster } from "react-hot-toast";
 
 const EASContractAddress = "0xC2679fBD37d54388Ce493F1DB75320D236e1815e";
 
@@ -15,7 +14,20 @@ function EASAttest() {
   const [submitUID, setSubmitUID] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const validateName = (name) => name.trim() !== "";
+  const validateAddress = (address) => ethers.utils.isAddress(address);
+  const validateMessage = (message) => message.trim() !== "";
+
+  const isFormValid = () => {
+    return validateName(name) && validateAddress(address) && validateMessage(message);
+  };
+
   const submitAttestation = async () => {
+    if (!isFormValid()) {
+      toast.error("Please fill all fields correctly.");
+      return;
+    }
+
     setSubmitUID("");
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -47,7 +59,8 @@ function EASAttest() {
       setLoading(true);
       toast.loading("Wait for transaction....!");
 
-      const newAttestationUID = await tx.wait();
+      const receipt = await tx.wait();
+      const newAttestationUID = receipt.events[0].args.uid;
 
       setLoading(false);
       toast.dismiss();
@@ -57,14 +70,15 @@ function EASAttest() {
       setAddress("");
       setMessage("");
     } catch (err) {
+      console.error("Error while attestation:", err);
       toast.error("Error while attestation!");
-      toast.dismiss();
+      setLoading(false);
     }
   };
 
   return (
     <div>
-
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="flex w-full flex-col items-center mt-8">
         <input
           className="w-80 p-2 mt-4 text-black rounded-md"
@@ -91,7 +105,7 @@ function EASAttest() {
           <button
             onClick={submitAttestation}
             className="w-40 p-2 text-black rounded-md bg-slate-400 hover:bg-slate-500"
-            disabled={loading}
+            disabled={loading || !isFormValid()}
           >
             {loading ? "Submitting..." : "Submit Attestation"}
           </button>
@@ -100,7 +114,9 @@ function EASAttest() {
             href={submitUID ? `https://sepolia.easscan.org/attestation/view/${submitUID}` : "#"}
             target="_blank"
             rel="noopener noreferrer"
-            className={`w-40 p-2 text-black rounded-md bg-slate-400 inline-block text-center ${!submitUID ? "disabled-link" : "hover:bg-slate-500"}`}
+            className={`w-40 p-2 text-black rounded-md bg-slate-400 inline-block text-center ${
+              !submitUID ? "disabled-link" : "hover:bg-slate-500"
+            }`}
             onClick={(e) => !submitUID && e.preventDefault()}
           >
             View Attestation

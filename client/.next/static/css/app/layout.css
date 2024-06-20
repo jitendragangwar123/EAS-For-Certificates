@@ -590,14 +590,17 @@ video {
 .min-h-screen {
   min-height: 100vh;
 }
+.w-72 {
+  width: 18rem;
+}
+.w-full {
+  width: 100%;
+}
 .w-40 {
   width: 10rem;
 }
 .w-80 {
   width: 20rem;
-}
-.w-full {
-  width: 100%;
 }
 .flex-row {
   flex-direction: row;
