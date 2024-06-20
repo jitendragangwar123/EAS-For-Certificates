@@ -59,19 +59,18 @@ function EASAttest() {
       setLoading(true);
       toast.loading("Wait for transaction....!");
 
-      const receipt = await tx.wait();
-      const newAttestationUID = receipt.events[0].args.uid;
+      const attestationId = await tx.wait();
 
       setLoading(false);
       toast.dismiss();
-      setSubmitUID(newAttestationUID);
+      setSubmitUID(attestationId);
       toast.success("Attestation Done!");
       setName("");
       setAddress("");
       setMessage("");
     } catch (err) {
-      console.error("Error while attestation:", err);
       toast.error("Error while attestation!");
+      toast.dismiss();
       setLoading(false);
     }
   };
