@@ -6,9 +6,9 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center p-18">
       <Header/>
-      <h2 className="flex items-center justify-center gap-10 pt-10">
-        <Image src="/header.png" height={180} width={180} alt="header" />
-        <span className="mt-2 font-bold">Completion Attestation</span>
+      <h2 className="flex items-center justify-center pt-20">
+        
+        <span className="mt-2 text-4xl font-bold">Completion Attestation</span>
       </h2>
       <EASAttest />
       <Image

@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
+import {toast} from "react-hot-toast";
 
 const Header = () => {
   const [walletAddress, setWalletAddress] = useState("");
@@ -23,8 +24,11 @@ const Header = () => {
       const signer = provider.getSigner();
       const address = await signer.getAddress();
       setWalletAddress(address);
+      toast.success("Wallet Connected!");
+      return;
     } else {
-      alert("Please install MetaMask!");
+      toast.warn("Please install MetaMask Wallet!");
+      return;
     }
   };
 
@@ -40,7 +44,7 @@ const Header = () => {
       </div>
       <button
         onClick={connectWallet}
-        className="p-2 bg-blue-600 rounded-md"
+        className="p-3 bg-blue-600 font-bold rounded-md"
       >
         {walletAddress
           ? `Connected: ${walletAddress.slice(0, 6)}...${walletAddress.slice(
