@@ -16,7 +16,7 @@ function EASAttest() {
   const submitAttestation = async () => {
     setSubmitUID("");
     const provider = new ethers.providers.Web3Provider(window.ethereum);
-    await provider.send('eth_requestAccounts', []);
+    await provider.send("eth_requestAccounts", []);
     const signer = provider.getSigner();
 
     const eas = new EAS(EASContractAddress);
@@ -43,7 +43,7 @@ function EASAttest() {
 
     setLoading(true);
 
-      const attestationId = await tx.wait();
+    const attestationId = await tx.wait();
     const newAttestationUID = await tx.wait();
 
     setLoading(false);
@@ -53,18 +53,13 @@ function EASAttest() {
     setName("");
     setAddress("");
     setMessage("");
-      setLoading(false);
-      toast.dismiss();
-      setSubmitUID(attestationId);
-      toast.success("Attestation Done!");
-      setName("");
-      setAddress("");
-      setMessage("");
-    } catch (err) {
-      toast.error("Error while attestation!");
-      toast.dismiss();
-      setLoading(false);
-    }
+    setLoading(false);
+    toast.dismiss();
+    setSubmitUID(attestationId);
+    toast.success("Attestation Done!");
+    setName("");
+    setAddress("");
+    setMessage("");
   };
 
   return (
