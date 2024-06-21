@@ -43,6 +43,7 @@ function EASAttest() {
 
     setLoading(true);
 
+      const attestationId = await tx.wait();
     const newAttestationUID = await tx.wait();
 
     setLoading(false);
@@ -52,6 +53,18 @@ function EASAttest() {
     setName("");
     setAddress("");
     setMessage("");
+      setLoading(false);
+      toast.dismiss();
+      setSubmitUID(attestationId);
+      toast.success("Attestation Done!");
+      setName("");
+      setAddress("");
+      setMessage("");
+    } catch (err) {
+      toast.error("Error while attestation!");
+      toast.dismiss();
+      setLoading(false);
+    }
   };
 
   return (
