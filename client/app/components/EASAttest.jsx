@@ -31,6 +31,10 @@ function EASAttest() {
 
     const schemaUID =
       "0xb28844791177681bd44d983e8aaa017f6a378e297271a46fd20d81a5cbadc386";
+    if(!address || !name || !message){
+      toast.error("Enter required fields!");
+      return;
+    }
 
     const tx = await eas.attest({
       schema: schemaUID,
